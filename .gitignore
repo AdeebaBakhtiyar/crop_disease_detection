@@ -44,4 +44,4 @@ Thumbs.db
 *.onnx
 *.zip
 *.crop_desease_dataset.zip
-
+*.crop_model.h5
