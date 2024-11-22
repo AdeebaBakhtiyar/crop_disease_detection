@@ -9,6 +9,7 @@ from tensorflow.keras.preprocessing.image import load_img, img_to_array
 
 app = Flask(__name__, static_folder='static', template_folder='templates')
 app.config['UPLOAD_FOLDER'] = 'static/uploads'  # Folder to store uploaded images
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 
 # Disable GPU on Render
 os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
@@ -16,7 +17,8 @@ os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 # Load your model
 model_id = '1vuHQcEXt1sY2dqbAjmNXI7465SRO4YZW'
 
-model_path =  '/opt/render/project/src/crop_model.h5'
+# model_path =  '/opt/render/project/src/crop_model.h5'
+model_path =  'crop_model.h5'
 
 # Function to download the model from Google Drive
 def download_model():
@@ -29,6 +31,7 @@ def download_model():
 download_model()
 
 model = load_model(model_path)
+model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
 class_names = ['corn_Blight', 'corn_Common_Rust', 'corn_Gray_Leaf_Spot',
                'maize_streak virus', 'rice_Bacterial leaf blight', 'rice_Brown spot',
@@ -48,7 +51,7 @@ def predict():
 
     file = request.files['file']
     if file.filename == '':
-        return render_template('index.html', message="No file selected")
+        return render_template('index.html', message="Choose file")
 
     if file:
         filename = secure_filename(file.filename)
@@ -76,4 +79,4 @@ def predict():
 if __name__ == "__main__":
     if not os.path.exists(app.config['UPLOAD_FOLDER']):
         os.makedirs(app.config['UPLOAD_FOLDER'])
-    app.run(debug=True)
+    app.run(debug=False)
