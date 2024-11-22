@@ -17,8 +17,8 @@ os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 # Load your model
 model_id = '1vuHQcEXt1sY2dqbAjmNXI7465SRO4YZW'
 
-# model_path =  '/opt/render/project/src/crop_model.h5'
-model_path =  'crop_model.h5'
+model_path =  '/opt/render/project/src/crop_model.h5'
+# model_path =  'crop_model.h5'
 
 # Function to download the model from Google Drive
 def download_model():
