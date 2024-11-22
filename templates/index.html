@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Disease Detection</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+
+
+<header> Predict your Crops Disease</header>
+    <div class="background">
+    <div class="container">
+        <!-- Left Panel with Images -->
+        <div class="left-panel">
+            <div class="row1"><p>Rice</p>
+            <img src="{{ url_for('static', filename='rice.jpg') }}" alt="Rice">
+                <p>Wheat</p>
+            <img src="{{ url_for('static', filename='wheat.jpg') }}" alt="Wheat">
+            </div>
+            <div class="row2">
+                <p>Maize</p>
+            <img src="{{ url_for('static', filename='corn.jpg') }}" alt="Maize">
+                 <p>Sugarcane</p>
+            <img src="{{ url_for('static', filename='sugarcane.jpg') }}" alt="Sugarcane">
+            </div>
+        </div>
+
+        <!-- Right Panel for Upload and Predict -->
+        <div class="right-panel">
+            <h2>Crop Disease Detection</h2>
+            <form action="/predict" method="POST" enctype="multipart/form-data">
+                <label for="file">Upload an Image of the Crop:</label>
+                <input type="file" id="file" name="file" accept="image/*" required>
+                <button type="submit">Predict</button>
+            </form>
+
+            {% if uploaded_file_url %}
+            <div class="results">
+                <h2>Prediction Results</h2>
+                <p><strong>Predicted Class:</strong> {{ predicted_class }}</p>
+                <p><strong>Confidence:</strong> {{ confidence }}%</p>
+                <img src="{{ uploaded_file_url }}" alt="Uploaded Image">
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    </div>
+</body>
+</html>
