@@ -7,7 +7,7 @@ import gdown
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.image import load_img, img_to_array
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static', template_folder='templates')
 app.config['UPLOAD_FOLDER'] = 'static/uploads'  # Folder to store uploaded images
 
 # Load your model
